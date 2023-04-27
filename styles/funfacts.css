@@ -1,0 +1,78 @@
+body.funfacts {
+  height: auto;
+  overflow: hidden;
+  background: #000 url(https://thumbs.gfycat.com/AbandonedSoupyKagu-size_restricted.gif) 0 0 no-repeat;
+  background-size: cover;
+  font-family: "Titillium Web", sans-serif;
+  transition: opacity 1s ease;
+}
+.load-facts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+* {
+  box-sizing: border-box;
+}
+.funfacts {
+  display: inline-block;
+  padding: 0 48px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 40px;
+  color: white;
+  width: 95%;
+  margin: 0 auto;
+}
+.funfacts a {
+  color: white;
+}
+.funfacts .image {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.875rem;
+}
+.funfacts .image img {
+  max-width: 80%;
+}
+.scroll-container {
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+.scroll-container.faded {
+  opacity: 0;
+}
+.scroll-text {
+  text-align: center;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+.scroll-text.animated {
+ /* animation properties */
+  transform: translateY(40%);
+  animation: my-animation 0s linear infinite;
+  animation-duration: 20s;
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateY(40%);
+    -webkit-transform: translateY(40%);
+    transform: translateY(40%);
+ }
+  to {
+    -moz-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+ }
+}
+
+.scroll-text.faded {
+  opacity: 0;
+}

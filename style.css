@@ -1,0 +1,41 @@
+body {
+	font-size: 300%;
+	margin: 0 auto;
+	max-width: 42em;
+	width: 88%;
+	font-family: "Titillium Web", sans-serif;
+	background-color: #000;
+	color: #fff;
+	height: 100vh;
+	overflow: hidden;
+}
+
+body.nowplaying {
+	background: #000 url(https://thumbs.gfycat.com/AbandonedSoupyKagu-size_restricted.gif) 0 0 no-repeat; 
+	background-size: cover;	  
+}
+
+.load-left {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	text-indent: -9999em;
+	z-index: 100;
+	cursor: pointer;
+}
+
+.track {
+	display: inline-block;
+}
+
+p {
+	text-align: center;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate3d(-50%, -50%, 0);
+	width: 90%;
+	transition: all .5s ease-in-out;
+}

@@ -5,6 +5,8 @@ body.funfacts {
   background-size: cover;
   font-family: "Titillium Web", sans-serif;
   transition: opacity 1s ease;
+  width: 800px;
+  height: 302px;
 }
 .load-facts {
   position: absolute;
@@ -58,6 +60,15 @@ body.funfacts {
   transform: translateY(40%);
   animation: my-animation 0s linear infinite;
   animation-duration: 20s;
+}
+
+@keyframes slider {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
 }
 
 @keyframes my-animation {

@@ -53,10 +53,12 @@ loadFacts.addEventListener('click', (e) => {
         restartAnimation();
         var scrollHeight = scrollText.offsetHeight;
         console.log('scrollHeight is', scrollHeight);
-        var scrollSpeed = scrollHeight / 40;
-        if (scrollSpeed < 10) {
-          scrollSpeed = 10;
-        }
+        let scrollSpeed = (scrollHeight * 2.0 + window.innerHeight * 2.0) / 100.0;
+        // var scrollSpeed = scrollHeight / 40;
+        // if (scrollSpeed < 10) {
+        //   scrollSpeed = 10  ;
+        // }
+        //scrollspeed = 1000;
         scrollText.style.animationDuration = scrollSpeed + 's';
         console.log('scrollspeed is', scrollSpeed + 's');
       });
@@ -114,7 +116,25 @@ async function infoWrite(artist, track) {
     'reconverb': '0m9yUg4SwtHC2YHtCuunJQ',
     'blutengel': '2SRu9oxCg91Omb2yMFzttR?si=64013c1267ef4556',
     'curve': '6WYkr1SJofUO79alKPjop0',
-    'vnv nation': 'https://open.spotify.com/artist/4KlYg0F5KG9QNDFKaeTNAy?si=40a26f8dfd87490b'
+    'vnv nation': 'https://open.spotify.com/artist/4KlYg0F5KG9QNDFKaeTNAy?si=40a26f8dfd87490b',
+    'tr⧸st': 'https://open.spotify.com/artist/64NhyHqRKYhV0IZylrElWu?si=9ab775e12bcc4399',
+    'void vision': 'https://open.spotify.com/artist/4PJ7jtAtcsjZItnD91XrMU?si=de54e8d1a2544ad9',
+    'm.a.r.r.s.': 'https://open.spotify.com/artist/13jRo2FyagCX9wrKIpOt46?si=809e3cf51a374836',
+    'howard jones': 'https://open.spotify.com/artist/6loBF9iQdE11WSX29fNKqY?si=6c3098537b3c45a2',
+    'jane child': 'https://open.spotify.com/artist/5JBif5ahOKFFVuEpHhrp8Y?si=209c71f73a5b4172',
+    'fee lion': 'https://open.spotify.com/artist/6GxyGOB90ojRbOdtOvGNcc?si=51d7500031ae46d6',
+    'adam & the ants': 'https://open.spotify.com/artist/2DppeCnNtvrLfEobq9Pw5r?si=c22dba7d27574f35',
+    'oingo boingo': 'https://open.spotify.com/artist/5LXEAEGrpKQtpyCu2sZuWu?si=3bcec038cc1e43d5',
+    'the mission': 'https://open.spotify.com/artist/4SAdMucvHyws4QTeAUsPtE?si=640bc0fd56064bc4',
+    'nox novacula': 'https://open.spotify.com/artist/7kNH9Eo1oB8yI9lEwekRvp?si=2c12c32a27aa4662',
+    'fluid ghost': 'https://open.spotify.com/artist/4UGeMNcR04aMfdDVgtBdQQ?si=e589686d83724d37',
+    'nnhmn': 'https://open.spotify.com/artist/3PFLYlaguMd2AXu1i3UAKt?si=u5RpuQK3QjW9L2K2L_V-fg',
+    'sextile': 'https://open.spotify.com/artist/4ReoJ2faKfdjI0plizlL56?si=3d3f63df7dd7462d',
+    'vacío eterno': 'https://open.spotify.com/artist/2QwzE5qu8KLZcfpuoweZrB?si=YaDcxy0pQ-G0hRuWklTBJw',
+    'spoek mathambo': 'https://open.spotify.com/artist/3qw0OXlLhqI78xEWw9Ys8O?si=ace68e0ea58843e8',
+    'wham!': 'https://open.spotify.com/artist/5lpH0xAS4fVfLkACg9DAuM?si=b3ad38706c134c53',
+    'duran duran': 'https://open.spotify.com/artist/0lZoBs4Pzo7R89JM9lxwoT?si=c65bbc7459644624',
+    'esses': 'https://open.spotify.com/artist/7HBg0SjUKvVd3IW9v1bf4T?si=1MMYC2GESBGwXi2e5U8ZRg'
   }
 
   //if artist is in customArtists, use the id from there

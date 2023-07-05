@@ -2,6 +2,13 @@ console.log('yo yo yo check');
 
 let tracklist = 'ArtistTitle.txt';
 
+function utf8ToHex(str) {
+  return Array.from(str).map(c => 
+    c.charCodeAt(0) < 128 ? c.charCodeAt(0).toString(16) : 
+    encodeURIComponent(c).replace(/\%/g,'').toLowerCase()
+  ).join('');
+}
+
 $('.load-left').click(function () {
     $.get(tracklist, function (data) {
       console.log('data is', data);
@@ -17,6 +24,8 @@ $('.load-left').click(function () {
           $(".result").html(`${artist} - ${track}`);
           $('.result').removeClass('animate__fadeOutDown').addClass('animate__fadeInDown');
         }, 1500);
+
+        console.log(utf8ToHex(data));
     });
     return false;
   });

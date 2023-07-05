@@ -134,7 +134,10 @@ async function infoWrite(artist, track) {
     'spoek mathambo': 'https://open.spotify.com/artist/3qw0OXlLhqI78xEWw9Ys8O?si=ace68e0ea58843e8',
     'wham!': 'https://open.spotify.com/artist/5lpH0xAS4fVfLkACg9DAuM?si=b3ad38706c134c53',
     'duran duran': 'https://open.spotify.com/artist/0lZoBs4Pzo7R89JM9lxwoT?si=c65bbc7459644624',
-    'esses': 'https://open.spotify.com/artist/7HBg0SjUKvVd3IW9v1bf4T?si=1MMYC2GESBGwXi2e5U8ZRg'
+    'esses': 'https://open.spotify.com/artist/7HBg0SjUKvVd3IW9v1bf4T?si=1MMYC2GESBGwXi2e5U8ZRg',
+    'riddlis': 'https://open.spotify.com/artist/4jIJyUhoYwPE24WKiuHNCq?si=2cab9dac61c24fd3',
+    's y z y g y x': 'https://open.spotify.com/artist/4WSJtJKAMPDSzGfamNOmAa?si=H7esd5IXS_uXtgxijBE6eA',
+    'boy harsher': 'https://open.spotify.com/artist/4iom7VVRU6AHRIu1JUXpLG?si=8w2-ECUfTJmtntMWLtzBCw'
   }
 
   //if artist is in customArtists, use the id from there

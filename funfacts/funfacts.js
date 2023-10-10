@@ -66,6 +66,29 @@ loadFacts.addEventListener('click', (e) => {
   });
 });
 
+// if a div with the class "facts-speed" is clicked, check to see if it has the class "faster". if it does, reduce scrollText's animation duration by 1 second. if not, reduce it by 1 second.
+document.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('speed change');
+  if(e.target.classList.contains('facts-speed')) {
+    if(e.target.classList.contains('faster')) {
+      let currentSpeed = scrollText.style.animationDuration;
+      currentSpeed = currentSpeed.replace('s', '');
+      currentSpeed = parseInt(currentSpeed);
+      currentSpeed -= 10;
+      scrollText.style.animationDuration = currentSpeed + 's';
+      console.log('current speed is', currentSpeed);
+    } else {
+      let currentSpeed = scrollText.style.animationDuration;
+      currentSpeed = currentSpeed.replace('s', '');
+      currentSpeed = parseInt(currentSpeed);
+      currentSpeed += 10;
+      scrollText.style.animationDuration = currentSpeed + 's';
+      console.log('current speed is', currentSpeed);
+    }
+  }
+});
+
 const waitForElement = ((selector) => new Promise((resolve) => {
   let element = document.querySelector(selector);
   if (element) {
@@ -137,7 +160,9 @@ async function infoWrite(artist, track) {
     'esses': 'https://open.spotify.com/artist/7HBg0SjUKvVd3IW9v1bf4T?si=1MMYC2GESBGwXi2e5U8ZRg',
     'riddlis': 'https://open.spotify.com/artist/4jIJyUhoYwPE24WKiuHNCq?si=2cab9dac61c24fd3',
     's y z y g y x': 'https://open.spotify.com/artist/4WSJtJKAMPDSzGfamNOmAa?si=H7esd5IXS_uXtgxijBE6eA',
-    'boy harsher': 'https://open.spotify.com/artist/4iom7VVRU6AHRIu1JUXpLG?si=8w2-ECUfTJmtntMWLtzBCw'
+    'boy harsher': 'https://open.spotify.com/artist/4iom7VVRU6AHRIu1JUXpLG?si=8w2-ECUfTJmtntMWLtzBCw',
+    'nine inch nails': 'https://open.spotify.com/artist/0X380XXQSNBYuleKzav5UO?si=6025060991a348bf',
+    'positive k': 'https://open.spotify.com/artist/5NtJpNZgRqBvRCq6OE08ZU?si=e9de2729d59247bd'
   }
 
   //if artist is in customArtists, use the id from there

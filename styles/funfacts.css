@@ -1,7 +1,7 @@
 body.funfacts {
   height: auto;
   overflow: hidden;
-  background: #000 url(https://thumbs.gfycat.com/AbandonedSoupyKagu-size_restricted.gif) 0 0 no-repeat;
+  background: #000 url(https://media4.giphy.com/media/3o6vXRxrhj7Ov94Gbu/giphy.gif?cid=5a38a5a2bnihgp4k15wthiqgkxheciu47dj9h24exjjz6l0m&ep=v1_gifs_search&rid=giphy.gif&ct=g) 0 0 no-repeat;
   background-size: cover;
   font-family: "Titillium Web", sans-serif;
   transition: opacity 1s ease;
@@ -13,9 +13,24 @@ body.funfacts {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; 
   z-index: 5;
 }
+
+.facts-speed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100vh;
+  z-index: 8;
+}
+
+.facts-speed.slower {
+  left: initial;
+  right: 0;
+}
+
 * {
   box-sizing: border-box;
 }

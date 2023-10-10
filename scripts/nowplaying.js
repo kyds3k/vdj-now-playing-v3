@@ -20,6 +20,9 @@
         let artist = wholeTrack.substring(0, cutoff);
         cutoff +=3;
         let track = wholeTrack.substring(cutoff);
+        track = track.replace('(Clean)', '');
+        track = track.replace('(Extended)', '');
+        console.log('track is', track);        
         result.innerHTML = (`${artist} - ${track}`);
         result.classList.remove('animate__fadeOutDown');
         result.classList.add('animate__fadeInDown');

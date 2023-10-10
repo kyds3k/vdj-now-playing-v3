@@ -21,6 +21,10 @@ $('.load-left').click(function () {
           let artist = wholeTrack.substring(0, cutoff);
           cutoff +=3;
           let track = wholeTrack.substring(cutoff);
+          // remove "(Clean)" and "(Extended)" from track name
+          track = track.replace('(Clean)', '');
+          track = track.replace('(Extended)', '');
+          console.log('track is', track);
           $(".result").html(`${artist} - ${track}`);
           $('.result').removeClass('animate__fadeOutDown').addClass('animate__fadeInDown');
         }, 1500);

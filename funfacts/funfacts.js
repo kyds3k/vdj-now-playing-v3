@@ -1,8 +1,16 @@
 import '../styles/funfacts.css';
+// Ensure you have the correct Supabase client import
+import { createClient } from '@supabase/supabase-js';
 
 
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
+
+
+const supabaseUrl = 'https://iwezigqyfoycwzfbjsuw.supabase.co'; // your Supabase project URL
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3ZXppZ3F5Zm95Y3d6ZmJqc3V3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU5NTQ1MjYsImV4cCI6MjA0MTUzMDUyNn0.nlC5AQNzRMk0J4Kmf5sLU_B8EDijZGL8l_BIrgBA2Pk'; // your Supabase API key
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 const loadFacts = document.querySelector('.load-facts');
 const scrollText = document.querySelector('.scroll-text');
@@ -11,12 +19,12 @@ const scrollContainer = document.querySelector('.scroll-container');
 loadFacts.addEventListener('click', (e) => {
   let fadeFinished = false;
   e.preventDefault();
-  // make the body opacity 0  
+  // make the body opacity 0
   document.body.style.opacity = 0;
 
   // Listen for the end of the opacity transition
   document.body.addEventListener('transitionend', function() {
-    console.log('transition ended');
+    // console.log('transition ended');
 
     if(!fadeFinished) {
       fetch('../tracklist.txt')
@@ -24,21 +32,23 @@ loadFacts.addEventListener('click', (e) => {
         return response.text();
       })
       .then(function(data) {
-        scrollText.innerHTML = '';    
+        scrollText.innerHTML = '';
         let firstBreak = data.lastIndexOf(': ');
         firstBreak +=2;
         let wholeTrack = data.substring(firstBreak);
-        var cutoff = wholeTrack.indexOf(' - ');
-        var artist = wholeTrack.substring(0, cutoff);
-        cutoff += 3;
-        var track = wholeTrack.substring(cutoff);
-        var removals = ['(Clean)', '(Dirty)', '(Extended)','(Single)', '(Official Video)', '(Intro)', '(Official Music Video)', '[Intro]', '(HD Remastered', '(official video)', '(Lyrics)', '(Lyric Video)', 'Official Music Video','Official Video','OFFICIAL VIDEO'];
+        console.log('whole track:', wholeTrack);
+        let cutoff = wholeTrack.lastIndexOf(' - ');
+        let artistTrack = wholeTrack.substring(0, cutoff);
+        let artist = artistTrack.substring(0, artistTrack.lastIndexOf(' - '));
+        let track = artistTrack.substring(artistTrack.lastIndexOf(' - ') + 3);
+        let removals = ['(Clean)', '(Dirty)', '(Extended)','(Single)', '(Official Video)', '(Intro)', '(Official Music Video)', '[Intro]', '(HD Remastered', '(official video)', '(Lyrics)', '(Lyric Video)', 'Official Music Video','Official Video','OFFICIAL VIDEO'];
         removals.forEach(function(key) {
           track = track.replace(key, '');
         });
         track = track.trim();
-        console.log(artist);
-        console.log(track);
+        console.log('artist - track:', artistTrack);
+        console.log('artist:', artist);
+        console.log('track:', track);
         infoWrite(artist, track);
       })
       .catch(function(error) {
@@ -46,21 +56,13 @@ loadFacts.addEventListener('click', (e) => {
       });
 
       waitForElement('.scroll-text .text').then(function() {
-        console.log('text is here!');
         document.body.style.opacity = 1;
         fadeFinished = true;
         void scrollText.offsetWidth;
         restartAnimation();
-        var scrollHeight = scrollText.offsetHeight;
-        console.log('scrollHeight is', scrollHeight);
+        let scrollHeight = scrollText.offsetHeight;
         let scrollSpeed = (scrollHeight * 2.0 + window.innerHeight * 2.0) / 100.0;
-        // var scrollSpeed = scrollHeight / 40;
-        // if (scrollSpeed < 10) {
-        //   scrollSpeed = 10  ;
-        // }
-        //scrollspeed = 1000;
         scrollText.style.animationDuration = scrollSpeed + 's';
-        console.log('scrollspeed is', scrollSpeed + 's');
       });
     }
   });
@@ -69,7 +71,6 @@ loadFacts.addEventListener('click', (e) => {
 // if a div with the class "facts-speed" is clicked, check to see if it has the class "faster". if it does, reduce scrollText's animation duration by 1 second. if not, reduce it by 1 second.
 document.addEventListener('click', (e) => {
   e.preventDefault();
-  console.log('speed change');
   if(e.target.classList.contains('facts-speed')) {
     if(e.target.classList.contains('faster')) {
       let currentSpeed = scrollText.style.animationDuration;
@@ -77,14 +78,12 @@ document.addEventListener('click', (e) => {
       currentSpeed = parseInt(currentSpeed);
       currentSpeed -= 10;
       scrollText.style.animationDuration = currentSpeed + 's';
-      console.log('current speed is', currentSpeed);
     } else {
       let currentSpeed = scrollText.style.animationDuration;
       currentSpeed = currentSpeed.replace('s', '');
       currentSpeed = parseInt(currentSpeed);
       currentSpeed += 10;
       scrollText.style.animationDuration = currentSpeed + 's';
-      console.log('current speed is', currentSpeed);
     }
   }
 });
@@ -110,84 +109,87 @@ const waitForElement = ((selector) => new Promise((resolve) => {
   observer.observe(document.documentElement, { childList: true, subtree: true });
 }));
 
+
 async function infoWrite(artist, track) {
-  /* manually declare an array of artist names with their respective ids*/
-  
   let id = '';
-  
-  const customArtists = {
-    'actors': '2Gs4t6zBT69DSluLvaEBWK',
-    'siouxsie and the banshees': '1n65zfwYIj5kKEtNgxUlWb',
-    'clan of xymox': '1wHmR7I0UlF58WFQexCPha',
-    'torul': '56EBe1vvPPsv7Pk5rAaSck',
-    'black box': '6tsRo8ErXzpHk3tQeH6GBW',
-    'xeno & oaklander': '3pMGuYgBWUDurP8HzPrKoI',
-    'showbiz & ag': '1U0EFT6jsUpEXAaWesmxAz',
-    'showbiz & a.g.': '1U0EFT6jsUpEXAaWesmxAz',
-    'echo & the bunnymen': '0fgYKF9Avljex0L9Wt5b8Z',
-    'echo and the bunnymen': '0fgYKF9Avljex0L9Wt5b8Z',
-    'cause & effect': '6yVCJmap0wrEq1d7TNAGJc',
-    'pure obsessions & red nights': '6m9fysdVTyH0KxNhG3DDaT',
-    'bronski beat': '2wpWOzQE5TpA0dVnh5YD08',
-    'madonna': '6tbjWDEIzxoDsBA1FuhfPW',
-    'hante.': '5PhSiNjHZevtfAj9zmvVkU',
-    'void vison': '4PJ7jtAtcsjZItnD91XrMU',
-    'the bolshoi': '30m0NFP0tHVmxcsUCvEN3K',
-    'kate bush': '1aSxMhuvixZ8h9dK9jIDwL',
-    'shriekback': '5zdhsKuFI263xttcgdoW3c',
-    'deus ex lumina': '5DbzvrfeTWRy2XP39CmmTS',
-    'reconverb': '0m9yUg4SwtHC2YHtCuunJQ',
-    'blutengel': '2SRu9oxCg91Omb2yMFzttR?si=64013c1267ef4556',
-    'curve': '6WYkr1SJofUO79alKPjop0',
-    'vnv nation': 'https://open.spotify.com/artist/4KlYg0F5KG9QNDFKaeTNAy?si=40a26f8dfd87490b',
-    'tr⧸st': 'https://open.spotify.com/artist/64NhyHqRKYhV0IZylrElWu?si=9ab775e12bcc4399',
-    'void vision': 'https://open.spotify.com/artist/4PJ7jtAtcsjZItnD91XrMU?si=de54e8d1a2544ad9',
-    'm.a.r.r.s.': 'https://open.spotify.com/artist/13jRo2FyagCX9wrKIpOt46?si=809e3cf51a374836',
-    'howard jones': 'https://open.spotify.com/artist/6loBF9iQdE11WSX29fNKqY?si=6c3098537b3c45a2',
-    'jane child': 'https://open.spotify.com/artist/5JBif5ahOKFFVuEpHhrp8Y?si=209c71f73a5b4172',
-    'fee lion': 'https://open.spotify.com/artist/6GxyGOB90ojRbOdtOvGNcc?si=51d7500031ae46d6',
-    'adam & the ants': 'https://open.spotify.com/artist/2DppeCnNtvrLfEobq9Pw5r?si=c22dba7d27574f35',
-    'oingo boingo': 'https://open.spotify.com/artist/5LXEAEGrpKQtpyCu2sZuWu?si=3bcec038cc1e43d5',
-    'the mission': 'https://open.spotify.com/artist/4SAdMucvHyws4QTeAUsPtE?si=640bc0fd56064bc4',
-    'nox novacula': 'https://open.spotify.com/artist/7kNH9Eo1oB8yI9lEwekRvp?si=2c12c32a27aa4662',
-    'fluid ghost': 'https://open.spotify.com/artist/4UGeMNcR04aMfdDVgtBdQQ?si=e589686d83724d37',
-    'nnhmn': 'https://open.spotify.com/artist/3PFLYlaguMd2AXu1i3UAKt?si=u5RpuQK3QjW9L2K2L_V-fg',
-    'sextile': 'https://open.spotify.com/artist/4ReoJ2faKfdjI0plizlL56?si=3d3f63df7dd7462d',
-    'vacío eterno': 'https://open.spotify.com/artist/2QwzE5qu8KLZcfpuoweZrB?si=YaDcxy0pQ-G0hRuWklTBJw',
-    'spoek mathambo': 'https://open.spotify.com/artist/3qw0OXlLhqI78xEWw9Ys8O?si=ace68e0ea58843e8',
-    'wham!': 'https://open.spotify.com/artist/5lpH0xAS4fVfLkACg9DAuM?si=b3ad38706c134c53',
-    'duran duran': 'https://open.spotify.com/artist/0lZoBs4Pzo7R89JM9lxwoT?si=c65bbc7459644624',
-    'esses': 'https://open.spotify.com/artist/7HBg0SjUKvVd3IW9v1bf4T?si=1MMYC2GESBGwXi2e5U8ZRg',
-    'riddlis': 'https://open.spotify.com/artist/4jIJyUhoYwPE24WKiuHNCq?si=2cab9dac61c24fd3',
-    's y z y g y x': 'https://open.spotify.com/artist/4WSJtJKAMPDSzGfamNOmAa?si=H7esd5IXS_uXtgxijBE6eA',
-    'boy harsher': 'https://open.spotify.com/artist/4iom7VVRU6AHRIu1JUXpLG?si=8w2-ECUfTJmtntMWLtzBCw',
-    'nine inch nails': 'https://open.spotify.com/artist/0X380XXQSNBYuleKzav5UO?si=6025060991a348bf',
-    'positive k': 'https://open.spotify.com/artist/5NtJpNZgRqBvRCq6OE08ZU?si=e9de2729d59247bd'
+  let bandcamp = '';
+
+  // Convert artist name to lowercase for consistent comparison
+  const artistKey = artist.toLowerCase();
+
+  // Fetch artist data from Supabase
+  const { data, error } = await supabase
+    .from('bands')  // Replace 'artists' with the actual name of your table
+    .select('id, bandcamp')
+    .ilike('name', artistKey);  // Assuming your table has a 'name' column
+
+  if (error) {
+    console.error('Error fetching artist data from Supabase:', error);
+    return;
   }
 
-  //if artist is in customArtists, use the id from there
-  if (customArtists[artist.toLowerCase()]) {
-    id = customArtists[artist.toLowerCase()];
-    // remove "https://open.spotify.com/artist/" from the id
+  if (data && data.length > 0) {
+    // If artist found in Supabase
+    id = data[0].id;
+    bandcamp = data[0].bandcamp;
+
+    // Remove "https://open.spotify.com/artist/" from the id
     id = id.replace('https://open.spotify.com/artist/', '');
-    // remove everything after and including "?si=" from the id
+    // Remove everything after and including "?si=" from the id
     id = id.split('?si=')[0];
-    console.log('custom artist!');
+    console.log('Artist found in Supabase:', id, bandcamp);
   } else {
+    // Fallback to external API if artist not found in Supabase
     id = await getArtistId(artist, track);
   }
 
+  // Fetch more artist info from another source (e.g., Spotify, Last.fm, etc.)
   const info = await getArtist(id);
+  console.log('Artist info:', info);
   let infoBio = info.biography;
-  if (infoBio == "null" || infoBio == null) {
+  let infoLinks = info.externalLinks;
+  
+  const fbLink = infoLinks.find(link => link.name === 'FACEBOOK')?.url;
+  const igLink = infoLinks.find(link => link.name === 'INSTAGRAM')?.url;
+  const twitterLink = infoLinks.find(link => link.name === 'TWITTER')?.url.split('?')[0];
+  const wikiLink = infoLinks.find(link => link.name === 'WIKIPEDIA')?.url;
+
+  console.log('fb:', fbLink);
+  console.log('ig:', igLink);
+  console.log('twitter:', twitterLink);
+  console.log('wiki:', wikiLink);
+
+  if (!infoBio) {
     infoBio = "No artist info found.";
   }
+
   setTimeout(() => {
-    let factContent = `<div class="image"><img src="${info.visuals ? info.visuals.avatar[0].url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"}" /></div><div class="text">${infoBio}</div>`;
-    console.log('fact content:', factContent);
+    let factContent = `<div class="image"><img src="${info.visuals ? info.visuals.avatar[2].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"}" /></div><div class="text">${infoBio}</div>`;
     document.querySelector('.scroll-text').innerHTML = factContent;
+
+    let hasLinks = (fbLink || igLink || twitterLink || wikiLink || bandcamp);
+
+    if (hasLinks) {
+      const fireApi = `http://10.147.17.113:7472/api/v1/effects/preset/cf030fc0-5a19-11ed-a803-ef13be8bbec8?${fbLink ? `facebook=${encodeURI(fbLink)}&` : ''}${igLink ? `instagram=${encodeURI(igLink)}&` : ''}${twitterLink ? `twitter=${encodeURI(twitterLink)}&` : ''}${wikiLink ? `wikipedia=${encodeURI(wikiLink)}&` : ''}${bandcamp ? `bandcamp=${encodeURI(bandcamp)}` : ''}`;
+      const kickApi = `https://api.aerokick.app/api/v1/bot/webhook/502c56ba-ff68-449b-b845-3b30433b0115`;
+      const kickBody = `Check out this artist at: ${bandcamp ? `Bandcamp: ${encodeURI(bandcamp)}` : ''} ${fbLink ? `Facebook: ${encodeURI(fbLink)}` : ''} ${igLink ? `Instagram: ${encodeURI(igLink)}` : ''} ${twitterLink ? `Twitter: ${encodeURI(twitterLink)}` : ''} ${wikiLink ? `Wikipedia: ${encodeURI(wikiLink)}` : ''}`
+      
+      fetch(kickApi, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: kickBody
+      });
+
+      // Optionally, call fireApi as well
+      // fetch(fireApi, { method: 'GET' });
+    }
   }, 3000);
 }
+
+
 
 async function getArtistId(artist, track) {
   const options = {
@@ -226,9 +228,9 @@ async function getArtistId(artist, track) {
       const searchTrackFt = searchTrack.replace('feat.', 'ft.');
       const responseArtist = response.artists[0].name.toLowerCase();
       const responseTrack = response.name.toLowerCase();
-      console.log(`search: ${searchTrack} by ${searchArtist}`);
-      console.log(`response: ${responseTrack} by ${responseArtist}`);
-      if(searchArtist == responseArtist && searchTrack == responseTrack || searchTrackFeat == responseTrack || searchTrackFt == responseTrack) {  
+      // console.log(`search: ${searchTrack} by ${searchArtist}`);
+      // console.log(`response: ${responseTrack} by ${responseArtist}`);
+      if(searchArtist == responseArtist && searchTrack == responseTrack || searchTrackFeat == responseTrack || searchTrackFt == responseTrack) {
         artistId = response.artists[0].id;
       } else {
         artistId = idResponse.tracks.items[0].artists[0].id;
@@ -236,7 +238,7 @@ async function getArtistId(artist, track) {
     });
 
 
-  console.log('artist id:', artistId);
+  // console.log('artist id:', artistId);
 
   if(artistId == '') {
     return null;
@@ -271,4 +273,22 @@ function restartAnimation() {
       circle.style.animationName = ""
     }, 0);
   });
+}
+
+// Function to load the data after Supabase is initialized
+async function loadData() {
+  try {
+    const { data, error } = await supabase
+      .from('bands')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      console.log('Data:', data);
+      // You can now use the 'data' variable to display or manipulate the fetched rows
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err);
+  }
 }

@@ -1,5 +1,3 @@
-console.log('yo yo yo check');
-
 let tracklist = 'ArtistTitle.txt';
 
 function utf8ToHex(str) {
@@ -24,6 +22,9 @@ $('.load-left').click(function () {
           // remove "(Clean)" and "(Extended)" from track name
           track = track.replace('(Clean)', '');
           track = track.replace('(Extended)', '');
+          // remove everything after the last " - "
+          let lastDash = track.lastIndexOf(' - ');
+          track = track.substring(0, lastDash);
           console.log('track is', track);
           $(".result").html(`${artist} - ${track}`);
           $('.result').removeClass('animate__fadeOutDown').addClass('animate__fadeInDown');

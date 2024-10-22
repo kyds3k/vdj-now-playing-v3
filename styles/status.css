@@ -1,0 +1,10 @@
+.statusbox {
+  background: url('https://miro.medium.com/v2/resize:fit:960/1*9OitFkZrN4JL9fO-U6anJA.gif') center center no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.statusbox.leggo {
+  background-image: url('https://www.bigfooty.com/forum/media/lets-go-the-rock-gif.49615/full');
+}

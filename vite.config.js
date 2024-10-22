@@ -7,6 +7,7 @@ export default defineConfig({
     input: {
       main: resolve(__dirname, 'index.html'),
       nested: resolve(__dirname, 'funfacts/index.html'),
+      nested: resolve(__dirname, 'status/index.html'),      
     },
     output: {
       entryFileNames () {

@@ -49,13 +49,15 @@ body.funfacts {
 }
 .funfacts .image {
   width: 100%;
-  text-align: center;
   display: flex;
   justify-content: center;
   margin-bottom: 1.875rem;
+  flex-grow: 1;
 }
 .funfacts .image img {
-  max-width: 80%;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
 }
 .scroll-container {
   overflow: hidden;
